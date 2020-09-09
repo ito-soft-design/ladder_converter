@@ -1,7 +1,7 @@
 $:.unshift File.expand_path(File.join(File.dirname(__FILE__), 'lib'))
 
 require 'rake/testtask'
-#require 'mel2kv'
+require 'mel2kv'
 
 task :default => :test
 

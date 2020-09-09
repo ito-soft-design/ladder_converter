@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+	<Expanded>0</Expanded>
+	<Child>
+		<value.first>ユニット構成</value.first>
+		<value.second>
+			<Expanded>1</Expanded>
+			<Child>
+				<value.first>[0]  KV-N14      R000/R500</value.first>
+				<value.second>
+					<Expanded>0</Expanded>
+				</value.second>
+			</Child>
+		</value.second>
+	</Child>
+</Root>
