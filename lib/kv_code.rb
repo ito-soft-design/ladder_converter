@@ -23,7 +23,8 @@ module LadderConvertor
             "ORI"   => "ORB",
             "ANB"   => "ANL",
             "ORB"   => "ORL",
-           }[mnemonic]
+            "PLS"   => "DIFU",
+          }[mnemonic]
           if n
             n
           else
