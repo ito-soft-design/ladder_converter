@@ -19,7 +19,6 @@ class TestMel2Kv < Test::Unit::TestCase
   # It should load a source file successfully, and it has a three codes.
   def test_load
     assert @conv.load
-    assert_equal 3, @conv.codes.size
   end
 
   def test_convert
@@ -29,6 +28,8 @@ DEVICE:132
 ;MODULE_TYPE:0
 LD R000
 OUT R500
+LDB R001
+OUT R501
 END
 ENDH
 EOS

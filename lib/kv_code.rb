@@ -12,13 +12,19 @@ module LadderConvertor
 
     private
 
-      def own_mnenonic mnemonic
-p mnemonic
+      def own_mnemonic mnemonic
         case mnemonic
         when 'LD', 'OUT', 'END'
           mnemonic
         else
-          raise "Unknown mnemonic #{mnemonic}!"
+          n = {
+            'LDI' => 'LDB'
+          }[mnemonic]
+          if n
+            n
+          else
+            raise "Unknown mnemonic #{mnemonic}!"
+          end
         end
       end
 
