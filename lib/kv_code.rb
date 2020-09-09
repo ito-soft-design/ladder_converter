@@ -20,7 +20,9 @@ module LadderConvertor
           n = {
             'LDI' => 'LDB',
             "ANI"   => "ANB",
-            }[mnemonic]
+            "ORI"   => "ORB",
+            "ANB"   => "ANL",
+          }[mnemonic]
           if n
             n
           else
