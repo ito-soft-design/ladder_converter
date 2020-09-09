@@ -14,7 +14,7 @@ module LadderConvertor
 
       def own_mnemonic mnemonic
         case mnemonic
-        when 'LD', 'OUT', 'END', 'AND'
+        when 'LD', 'OUT', 'END', 'AND', 'OR'
           mnemonic
         else
           n = {
