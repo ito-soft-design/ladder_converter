@@ -22,7 +22,8 @@ module LadderConvertor
             "ANI"   => "ANB",
             "ORI"   => "ORB",
             "ANB"   => "ANL",
-          }[mnemonic]
+            "ORB"   => "ORL",
+           }[mnemonic]
           if n
             n
           else
