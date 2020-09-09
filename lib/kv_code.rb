@@ -18,8 +18,9 @@ module LadderConvertor
           mnemonic
         else
           n = {
-            'LDI' => 'LDB'
-          }[mnemonic]
+            'LDI' => 'LDB',
+            "ANI"   => "ANB",
+            }[mnemonic]
           if n
             n
           else
