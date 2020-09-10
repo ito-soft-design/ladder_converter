@@ -31,7 +31,8 @@ module LadderConvertor
           "#{own_mnemonic($1)}F"
 
         when 'LD', 'OUT', 'END', 'AND', 'OR', 'SET',
-             'MPS', 'MRD', 'MPP'
+             'MPS', 'MRD', 'MPP',
+             'MOV'
           mnemonic
         else
           n = {
@@ -44,6 +45,11 @@ module LadderConvertor
             "PLF"   => "DIFD",
             "RST"   => "RES",
           
+            "ADD"   => "CAL+",
+            "SUB"   => "CAL-",
+            "MUL"   => "CAL*",
+            "DIV"   => "CAL/",
+
           }[mnemonic]
           if n
             n

@@ -11,6 +11,10 @@ module LadderConvertor
       @devices = devices.map{|d| own_device d}.select{|d| d && d.length != 0}
     end
 
+    def add_device device
+      @devices << own_device(device)
+    end
+
     private
 
       def own_mnemonic mnemonic

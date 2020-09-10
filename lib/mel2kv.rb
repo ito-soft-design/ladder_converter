@@ -24,7 +24,7 @@ class Mel2Kv
       device = row["I/O(デバイス)"]
       case mnemonic
       when ""
-        @codes.last.devices << device
+        @codes.last.add_device device
       else
         @codes << KvCode.new(mnemonic, [device])
       end
