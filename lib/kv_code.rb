@@ -18,11 +18,15 @@ module LadderConvertor
 
         when "MPP"
           mnemonic
+        when 'ANDP'
+          'ANP'
         when /(.+)P$/
           "#{own_mnemonic($1)}P"
 
         when "PLF"
           "DIFD"
+        when 'ANDF'
+          'ANF'
         when /(.+)F$/
           "#{own_mnemonic($1)}F"
 
