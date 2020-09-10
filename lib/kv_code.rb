@@ -16,10 +16,9 @@ module LadderConvertor
         mnemonic.upcase!
         case mnemonic
 
-        when /^(ADD|SUB|MUL|DIV)P$/
-          "#{own_mnemonic($1)}P"
-        when /^D((ADD|SUB|MUL|DIV)P)$/
-          "#{own_mnemonic($1)}.D"
+          
+        when 'INC', 'DEC'
+          mnemonic
         when /^(ADD|SUB|MUL|DIV)$/
           {
             "ADD"   => "CAL+",
@@ -27,6 +26,11 @@ module LadderConvertor
             "MUL"   => "CAL*",
             "DIV"   => "CAL/",
           }[mnemonic]
+
+        when /^(ADD|SUB|MUL|DIV|INC|DEC)P$/
+          "#{own_mnemonic($1)}P"
+        when /^D((ADD|SUB|MUL|DIV|INC|DEC)P)$/
+          "#{own_mnemonic($1)}.D"
 
         when 'MPS', 'MRD', 'MPP'
           mnemonic
