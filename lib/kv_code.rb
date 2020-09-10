@@ -13,7 +13,19 @@ module LadderConvertor
     private
 
       def own_mnemonic mnemonic
+        mnemonic.upcase!
         case mnemonic
+
+        when "MPP"
+          mnemonic
+        when /(.+)P$/
+          "#{own_mnemonic($1)}P"
+
+        when "PLF"
+          "DIFD"
+        when /(.+)F$/
+          "#{own_mnemonic($1)}F"
+
         when 'LD', 'OUT', 'END', 'AND', 'OR', 'SET',
              'MPS', 'MRD', 'MPP'
           mnemonic
