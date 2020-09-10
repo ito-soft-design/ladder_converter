@@ -35,9 +35,18 @@ module LadderConvertor
         when /^D(.+)/
           "#{own_mnemonic($1)}.D"
 
+        when /^(LD|AND|OR)D([=<>]+)/
+          "#{$1}#{$2}.D"
+
         when 'LD', 'OUT', 'END', 'AND', 'OR', 'SET',
              'MPS', 'MRD', 'MPP',
-             'MOV'
+             'MOV',
+             'LD=', 'AND=', 'OR=',
+             'LD<>', 'AND<>', 'OR<>',
+             'LD<', 'AND<', 'OR<',
+             'LD>', 'AND>', 'OR>',
+             'LD<=', 'AND<=', 'OR<=',
+             'LD>=', 'AND>=', 'OR>='
           mnemonic
         else
           n = {
@@ -54,6 +63,8 @@ module LadderConvertor
             "SUB"   => "CAL-",
             "MUL"   => "CAL*",
             "DIV"   => "CAL/",
+            "WAND"   => "CAL&",
+            "WOR"   => "CAL|",
 
           }[mnemonic]
           if n
