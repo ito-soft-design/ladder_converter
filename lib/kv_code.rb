@@ -16,8 +16,25 @@ module LadderConvertor
         mnemonic.upcase!
         case mnemonic
 
-        when "MPP"
+        when /^(ADD|SUB|MUL|DIV)P$/
+          "#{own_mnemonic($1)}P"
+        when /^D((ADD|SUB|MUL|DIV)P)$/
+          "#{own_mnemonic($1)}.D"
+        when /^(ADD|SUB|MUL|DIV)$/
+          {
+            "ADD"   => "CAL+",
+            "SUB"   => "CAL-",
+            "MUL"   => "CAL*",
+            "DIV"   => "CAL/",
+          }[mnemonic]
+
+        when 'MPS', 'MRD', 'MPP'
           mnemonic
+
+
+        when /^D(.+)/
+          "#{own_mnemonic($1)}.D"
+
         when 'ANDP'
           'ANP'
         when /(.+)P$/
@@ -30,16 +47,10 @@ module LadderConvertor
         when /(.+)F$/
           "#{own_mnemonic($1)}F"
 
-        when "DIV"
-          "CAL/"
-        when /^D(.+)/
-          "#{own_mnemonic($1)}.D"
-
         when /^(LD|AND|OR)D([=<>]+)/
           "#{$1}#{$2}.D"
 
         when 'LD', 'OUT', 'END', 'AND', 'OR', 'SET',
-             'MPS', 'MRD', 'MPP',
              'MOV',
              'LD=', 'AND=', 'OR=',
              'LD<>', 'AND<>', 'OR<>',
@@ -59,10 +70,6 @@ module LadderConvertor
             "PLF"   => "DIFD",
             "RST"   => "RES",
           
-            "ADD"   => "CAL+",
-            "SUB"   => "CAL-",
-            "MUL"   => "CAL*",
-            "DIV"   => "CAL/",
             "WAND"   => "CAL&",
             "WOR"   => "CAL|",
 
