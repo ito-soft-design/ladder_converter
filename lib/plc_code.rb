@@ -15,6 +15,10 @@ module LadderConverter
       @devices << own_device(device)
     end
 
+    def device
+      devices.first
+    end
+
     private
 
       def own_mnemonic mnemonic

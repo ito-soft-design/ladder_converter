@@ -44,6 +44,12 @@ DEVICE:132
 ;MODULE:Main
 ;MODULE_TYPE:0
 EOS
+    # collect subrouten labels
+    sb_labels = codes.select{|c| c.mnemonic == "CALL"}.map{|c| c.devices.first}
+    # replace mnemonic LABLE to SBN if it's for subroutin.
+    codes.select{|c| c.mnemonic == "LABEL" && sb_labels.include?(c.device)}.each{|c| c.becone_subroutin_label }
+
+    # add kv codes string
     @converted += codes.map(&:to_s).join("\n")
     @converted += "\nENDH\n"
   end

@@ -8,11 +8,15 @@ module LadderConverter
     def initialize mnemonic, devices
       super
       case self.mnemonic
-      when 'SBN'
+      when 'LABEL'
         @devices = [own_device(mnemonic)]
       end
     end
       
+    def becone_subroutin_label
+      @mnemonic = 'SBN'
+    end
+
     def to_s
       return mnemonic if devices.empty?
       ([mnemonic] + devices).join(" ")
@@ -63,8 +67,7 @@ module LadderConverter
           "#{$1}#{$2}.D"
 
         when /^P(\d+)/
-          @devices = ["##{$1}"]
-          'SBN'
+          'LABEL'
 
         when 'LD', 'OUT', 'END', 'AND', 'OR', 'SET',
              'MOV',
@@ -74,7 +77,8 @@ module LadderConverter
              'LD>', 'AND>', 'OR>',
              'LD<=', 'AND<=', 'OR<=',
              'LD>=', 'AND>=', 'OR>=',
-             'CALL', 'RET'
+             'CJ', 
+             'CALL'
           mnemonic
         else
           n = {
@@ -89,6 +93,8 @@ module LadderConverter
           
             "WAND"  => "CAL&",
             "WOR"   => "CAL|",
+
+            'SRET'  => 'RET',
 
             "FEND"  => "END",
 
