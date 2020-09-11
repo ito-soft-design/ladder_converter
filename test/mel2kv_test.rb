@@ -2,7 +2,7 @@ require 'test/unit'
 require 'mel2kv'
 require 'fileutils'
 
-include LadderConvertor
+include LadderConverter
 include FileUtils
 
 $dir = File.dirname(File.expand_path(__FILE__))
@@ -176,7 +176,11 @@ DEC.D DM0
 LD MR710
 INCP.D DM0
 DECP.D DM0
+LD MR711
+CALL #0
 END
+SBN #0
+RET
 ENDH
 EOS
     @conv.convert

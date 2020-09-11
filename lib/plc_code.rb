@@ -1,4 +1,4 @@
-module LadderConvertor
+module LadderConverter
 
   class PlcCode
 

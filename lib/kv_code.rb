@@ -1,10 +1,18 @@
 require 'plc_code'
 
-module LadderConvertor
+module LadderConverter
 
 
   class KvCode < PlcCode
 
+    def initialize mnemonic, devices
+      super
+      case self.mnemonic
+      when 'SBN'
+        @devices = [own_device(mnemonic)]
+      end
+    end
+      
     def to_s
       return mnemonic if devices.empty?
       ([mnemonic] + devices).join(" ")
@@ -54,6 +62,10 @@ module LadderConvertor
         when /^(LD|AND|OR)D([=<>]+)/
           "#{$1}#{$2}.D"
 
+        when /^P(\d+)/
+          @devices = ["##{$1}"]
+          'SBN'
+
         when 'LD', 'OUT', 'END', 'AND', 'OR', 'SET',
              'MOV',
              'LD=', 'AND=', 'OR=',
@@ -61,7 +73,8 @@ module LadderConvertor
              'LD<', 'AND<', 'OR<',
              'LD>', 'AND>', 'OR>',
              'LD<=', 'AND<=', 'OR<=',
-             'LD>=', 'AND>=', 'OR>='
+             'LD>=', 'AND>=', 'OR>=',
+             'CALL', 'RET'
           mnemonic
         else
           n = {
@@ -74,8 +87,10 @@ module LadderConvertor
             "PLF"   => "DIFD",
             "RST"   => "RES",
           
-            "WAND"   => "CAL&",
+            "WAND"  => "CAL&",
             "WOR"   => "CAL|",
+
+            "FEND"  => "END",
 
           }[mnemonic]
           if n
@@ -113,6 +128,8 @@ module LadderConvertor
           device.gsub(/^K+/i, "#")
         when /^H(.+)/
           "$#{$1}"
+        when /^P(\d+)/
+          "##{$1}"
         else
           device
         end
