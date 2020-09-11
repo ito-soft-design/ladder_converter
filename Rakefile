@@ -1,31 +1,12 @@
-$:.unshift File.expand_path(File.join(File.dirname(__FILE__), 'lib'))
-
-require 'rake/testtask'
-require 'mel2kv'
+require "bundler/gem_tasks"
+require "rake/testtask"
+require 'ladder_converter'
 
 ENV['TESTOPTS'] = "--max-diff-target-string-size=2000"
+Rake::TestTask.new(:test) do |t|
+  t.libs << "test"
+  t.libs << "lib"
+  t.test_files = FileList['test/**/*_test.rb']
+end
 
 task :default => :test
-
-Rake::TestTask.new do |t|
-  t.test_files = FileList['test/**/*_test.rb']
-  t.warning = true
-end
-
-__END__
-
-desc "Convert FX device to KV device."
-task :kvdevice do
-  plc = Mel2Kv.new
-  loop do
-    print "Input FX device name: "
-    dev_name = STDIN.gets.chomp
-    case dev_name
-    when "quit", "q"
-      break
-    else
-      puts "KV device name => #{plc.to_kv_device(dev_name)}"
-      puts
-    end
-  end
-end

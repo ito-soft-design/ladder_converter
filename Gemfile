@@ -1,5 +1,4 @@
-# frozen_string_literal: true
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "test-unit"
-gem 'csv'
+# Specify your gem's dependencies in ladder_converter.gemspec
+gemspec

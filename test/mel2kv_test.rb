@@ -1,5 +1,5 @@
 require 'test/unit'
-require 'mel2kv'
+require 'ladder_converter'
 require 'fileutils'
 
 include LadderConverter
