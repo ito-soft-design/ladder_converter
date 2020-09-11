@@ -14,7 +14,7 @@
           <IsAutoHide>false</IsAutoHide>
           <Size>
             <Width>1185</Width>
-            <Height>704</Height>
+            <Height>682</Height>
           </Size>
           <LeftIndex>-1</LeftIndex>
           <TopIndex>-1</TopIndex>
@@ -48,7 +48,7 @@
       <Name>Main</Name>
       <SaveKey>[Ladder]Main</SaveKey>
       <DockingBarState>
-        <Key>Document@Ladder-386473888</Key>
+        <Key>Document@Ladder-452436632</Key>
         <Usable>true</Usable>
         <IsFloating>false</IsFloating>
         <DockingInfo>
@@ -57,7 +57,7 @@
           <IsAutoHide>false</IsAutoHide>
           <Size>
             <Width>1185</Width>
-            <Height>704</Height>
+            <Height>682</Height>
           </Size>
           <LeftIndex>-1</LeftIndex>
           <TopIndex>-1</TopIndex>

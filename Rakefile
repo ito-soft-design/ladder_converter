@@ -3,6 +3,8 @@ $:.unshift File.expand_path(File.join(File.dirname(__FILE__), 'lib'))
 require 'rake/testtask'
 require 'mel2kv'
 
+ENV['TESTOPTS'] = "--max-diff-target-string-size=2000"
+
 task :default => :test
 
 Rake::TestTask.new do |t|

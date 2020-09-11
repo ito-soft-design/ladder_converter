@@ -39,8 +39,8 @@ module LadderConverter
             "DIV"   => "CAL/",
           }[mnemonic]
 
-        when /^(ADD|SUB|MUL|DIV|INC|DEC)P$/
-          "#{own_mnemonic($1)}P"
+        when /^(ADD|SUB|MUL|DIV|INC|DEC)P$/, /^@(ADD|SUB|MUL|DIV|INC|DEC)$/
+          "@#{own_mnemonic($1)}"
         when /^D((ADD|SUB|MUL|DIV|INC|DEC)P)$/
           "#{own_mnemonic($1)}.D"
 
@@ -51,10 +51,12 @@ module LadderConverter
         when /^D(.+)/
           "#{own_mnemonic($1)}.D"
 
+        when 'LDP', 'ORP'
+          mnemonic
         when 'ANDP'
           'ANP'
         when /(.+)P$/
-          "#{own_mnemonic($1)}P"
+          "@#{own_mnemonic($1)}"
 
         when "PLF"
           "DIFD"
