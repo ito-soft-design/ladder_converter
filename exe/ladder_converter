@@ -1,3 +1,38 @@
 #!/usr/bin/env ruby
 
 require "ladder_converter"
+require 'optparse'
+
+include LadderConverter
+
+opt = OptionParser.new do |opt|
+  opt.banner = 'Usage: ladder_converter source_file target_file'
+  opt.parse!(ARGV)
+end
+
+unless ARGV.size == 2
+  puts opt.help
+  exit -1
+end
+
+src_path = ARGV[0]
+dst_path = ARGV[1]
+
+unless File.exist? src_path
+  STDERR.puts "Source file #{File.basename(src_path)} is not found!"
+  exit -1
+end
+
+while File.exist? dst_path
+  print "Target file #{File.basename(dst_path)} is exist. Overwrite existing file (y/N) ? "
+  case STDIN.gets.chomp
+  when /^y$/i, /^yes$/i
+    break
+  when /^n$/i, /^no$/i
+    STDERR.puts "Abort converting!"
+    exit -1
+  end
+end
+
+converter = Mel2Kv.new src:src_path, dst:dst_path
+converter.save
