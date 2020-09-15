@@ -25,9 +25,9 @@ gem 'ladder_converter'
 ### コマンドとして使用する場合
 
 1. 三菱電機製のPLCプロジェクトをCSVファイルに書き出します。  
-  GX Works2で該当ラダーブログラムを表示し、編集メニューからCSVファイルへ書き込みを選択しCSVファイルを書き出せます。[^1]
+  GX Works2で該当ラダーブログラムを表示し、編集メニューからCSVファイルへ書き込みを選択しCSVファイルを書き出せます。 (^1)
   
-2. ターミナル [^2] を開きます、下の様にladder_converterに 1 で書き出したCSVファイルを指定し、次に書き出しすKeyenceのニーモニックファイルの保存先を指定し実行すると変換されます。
+2. ターミナル (^2) を開きます、下の様にladder_converterに 1 で書き出したCSVファイルを指定し、次に書き出すKeyenceのニーモニックファイルの保存先を指定し実行すると変換されます。
 
 ```
     $ ladder_converter source_file target_file
@@ -40,7 +40,7 @@ gem 'ladder_converter'
 ### Rubyスクリプトで変換する場合
 
 1. 三菱電機製のPLCプロジェクトをCSVファイルに書き出します。  
-  GX Works2で該当ラダーブログラムを表示し、編集メニューからCSVファイルへ書き込みを選択しCSVファイルを書き出せます。[^1]  
+  GX Works2で該当ラダーブログラムを表示し、編集メニューからCSVファイルへ書き込みを選択しCSVファイルを書き出せます。(^1)  
 
 2. 下のコードを記述すると変換できます。  
   src_pathには 1 で書き出したCSVファイルを指定します。dst_pathには書き出しすKeyenceのニーモニックファイルの保存先を指定します。
@@ -62,7 +62,7 @@ gem 'ladder_converter'
 ## 進捗状況
 
 現在FX2プロジェクトからKV Nanoプロジェクトへの変換を試みています。  
-テストで用いているしたのリンクにあるGX Works2プロジェクに含まれている基本的なラダーのみ変換可能です。  
+下のリンクにある、テストで用いたGX Works2プロジェクに含まれている基本的なラダーのみ変換可能です。  
 この中に含まれない命令が含まれている場合は変換できません。  
 
 https://github.com/ito-soft-design/ladder_converter/blob/master/test/files/src/FX2N.gxw
@@ -77,5 +77,5 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/ito-so
 [MIT License](http://opensource.org/licenses/MIT)
 
 
-[^1]: ラベルを使わずラダーのみのプロジェクトの場合に書き出せます。
-[^2]: Windowsの場合はコマンドプロンプトまたはWindows PowerShellを起動します。
+^1: ラベルを使わずラダーのみのプロジェクトの場合に書き出せます。  
+^2: Windowsの場合はコマンドプロンプトまたはWindows PowerShellを起動します。  
