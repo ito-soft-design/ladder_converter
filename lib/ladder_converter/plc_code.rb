@@ -31,4 +31,7 @@ module LadderConverter
 
   end
 
+  class UnknownCodeError < StandardError
+  end
+
 end
