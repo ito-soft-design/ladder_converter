@@ -7,12 +7,14 @@ class Mel2Kv
   attr_reader :codes
   attr_reader :converted
   attr_reader :src, :dst
+  attr_reader :logging_file
 
   attr_reader :ignore_unknown
 
   def initialize options={}
     @src = options[:src]
     @dst = options[:dst]
+    @logging_file = options[:logging_file]
     @ignore_unknown = options[:ignore_unknown]
     @codes = nil
   end
@@ -21,27 +23,35 @@ class Mel2Kv
     return false unless File.exist? @src
     return true if @codes
 
-    @codes = []
-    has_end = false
-    CSV.open(@src, "rb:BOM|UTF-16:UTF-8", headers:true, skip_lines:Regexp.new(/^[^\t]+$|PC情報:/), col_sep:"\t").each_with_index do |row, i|
-      begin
-        mnemonic = row["命令"]
-        device = row["I/O(デバイス)"]
-        case mnemonic
-        when ""
-          @codes.last.add_device device
-        when 'END', 'FEND'
-          unless has_end
+    begin
+      logfile = File.open(logging_file, "w") rescue nil
+
+      @codes = []
+      has_end = false
+      CSV.open(@src, "rb:BOM|UTF-16:UTF-8", headers:true, skip_lines:Regexp.new(/^[^\t]+$|PC情報:/), col_sep:"\t").each_with_index do |row, i|
+        begin
+          mnemonic = row["命令"]
+          device = row["I/O(デバイス)"]
+          case mnemonic
+          when ""
+            @codes.last.add_device device
+          when 'END', 'FEND'
+            unless has_end
+              @codes << KvCode.new(mnemonic, [device])
+              has_end = true
+            end
+          else
             @codes << KvCode.new(mnemonic, [device])
-            has_end = true
           end
-        else
-          @codes << KvCode.new(mnemonic, [device])
+        rescue UnknownCodeError => e
+          mes = "[WARN] SKIPPED! : line #{i+(3+1)} : #{e}"
+          STDERR.puts mes
+          logfile.puts mes if logfile
+          raise unless ignore_unknown
         end
-      rescue UnknownCodeError => e
-        STDERR.puts "[WARN] SKIPPED! : line #{i+(3+1)} : #{e}"
-        raise unless ignore_unknown
       end
+    ensure
+      logfile.close if logfile
     end
   end
 
