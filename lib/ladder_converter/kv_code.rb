@@ -119,7 +119,7 @@ module LadderConverter
           when /^M8001$/i # 常時OFF
             "CR2003"
           when /^([A-Z]+.+)(Z\d+)/
-            "#{$1}:#{conv_dev $2}"
+            "#{own_device $1}:#{own_device $2}"
           when /^Z(\d+)$/
             "Z#{($1.to_i + 1).to_s.rjust(2, '0')}"
           when /^MR|^DM/i
@@ -134,7 +134,7 @@ module LadderConverter
           when /^D/i
             device.gsub(/^D+/i, "DM")
           when /^K\d+([A-Z]+.+)/i
-            return conv_dev $1
+            return own_device $1
           when /^K\d+$/i
             device.gsub(/^K+/i, "#")
           when /^H(.+)/
