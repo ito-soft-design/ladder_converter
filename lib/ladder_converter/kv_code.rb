@@ -80,7 +80,8 @@ module LadderConverter
              'LD<=', 'AND<=', 'OR<=',
              'LD>=', 'AND>=', 'OR>=',
              'CJ', 
-             'CALL'
+             'CALL',
+             'FMOV', 'BMOV'
           mnemonic
         else
           n = {
