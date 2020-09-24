@@ -81,7 +81,8 @@ module LadderConverter
              'LD>=', 'AND>=', 'OR>=',
              'CJ', 
              'CALL',
-             'FMOV', 'BMOV'
+             'FMOV', 'BMOV',
+             'FOR', 'NEXT'
           mnemonic
         else
           n = {
