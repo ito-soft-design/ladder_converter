@@ -44,7 +44,7 @@ module LadderConverter
         when /^D((ADD|SUB|MUL|DIV|INC|DEC)P)$/
           "#{own_mnemonic($1)}.D"
 
-        when 'MPS', 'MRD', 'MPP'
+        when 'MPS', 'MRD', 'MPP', 'NOP'
           mnemonic
 
 

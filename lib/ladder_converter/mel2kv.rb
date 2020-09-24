@@ -33,6 +33,8 @@ class Mel2Kv
           mnemonic = row["命令"]
           device = row["I/O(デバイス)"]
           case mnemonic
+          when 'NOP'
+            # Skip
           when ""
             @codes.last.add_device device
           when 'END', 'FEND'
