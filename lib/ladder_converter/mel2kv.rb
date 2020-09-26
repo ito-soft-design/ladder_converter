@@ -8,9 +8,12 @@ class Mel2Kv
   attr_reader :converted
   attr_reader :src, :dst
 
+  attr_reader :ignore_unknown
+
   def initialize options={}
     @src = options[:src]
     @dst = options[:dst]
+    @ignore_unknown = options[:ignore_unknown]
     @codes = nil
   end
 
@@ -20,19 +23,24 @@ class Mel2Kv
 
     @codes = []
     has_end = false
-    CSV.open(@src, "rb:BOM|UTF-16:UTF-8", headers:true, skip_lines:Regexp.new(/^[^\t]+$|PC情報:/), col_sep:"\t").each_with_index do |row, l|
-      mnemonic = row["命令"]
-      device = row["I/O(デバイス)"]
-      case mnemonic
-      when ""
-        @codes.last.add_device device
-      when 'END', 'FEND'
-        unless has_end
+    CSV.open(@src, "rb:BOM|UTF-16:UTF-8", headers:true, skip_lines:Regexp.new(/^[^\t]+$|PC情報:/), col_sep:"\t").each_with_index do |row, i|
+      begin
+        mnemonic = row["命令"]
+        device = row["I/O(デバイス)"]
+        case mnemonic
+        when ""
+          @codes.last.add_device device
+        when 'END', 'FEND'
+          unless has_end
+            @codes << KvCode.new(mnemonic, [device])
+            has_end = true
+          end
+        else
           @codes << KvCode.new(mnemonic, [device])
-          has_end = true
         end
-      else
-        @codes << KvCode.new(mnemonic, [device])
+      rescue UnknownCodeError => e
+        STDERR.puts "[WARN] SKIPPED! : line #{i+(3+1)} : #{e}"
+        raise unless ignore_unknown
       end
     end
   end

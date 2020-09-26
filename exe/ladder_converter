@@ -5,8 +5,11 @@ require 'optparse'
 
 include LadderConverter
 
+@options = {ignore_unknown:true}
+
 opt = OptionParser.new do |opt|
   opt.banner = 'Usage: ladder_converter source_file target_file'
+  opt.on('--[no-]ignore-unknown', "Skip a code if it's an unknown mnemonic or device. If set no- quit converting immediately.") {|v| @options[:ignore_unknown] = v }
   opt.parse!(ARGV)
 end
 
@@ -34,5 +37,6 @@ while File.exist? dst_path
   end
 end
 
-converter = Mel2Kv.new src:src_path, dst:dst_path
+
+converter = Mel2Kv.new @options.merge(src:src_path, dst:dst_path)
 converter.save
