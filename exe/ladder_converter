@@ -8,9 +8,17 @@ include LadderConverter
 @options = {ignore_unknown:true}
 
 opt = OptionParser.new do |opt|
-  opt.banner = 'Usage: ladder_converter source_file target_file'
+  opt.banner = 'Usage: ladder_converter source_file target_file [options]'
   opt.on('--[no-]ignore-unknown', "Skip a code if it's an unknown mnemonic or device. If set no- quit converting immediately.") {|v| @options[:ignore_unknown] = v }
+  opt.on('-f', '--force-converting', "Convert codes without querying to overwrite the target file.") {|v| @options[:force_converting] = v }
+  opt.on('-l file', '--logging-file file', "Set a path to write a logging file.") {|v| @options[:logging_file] = v }
+  opt.on('-v', '--version', "print the version number, then exit.") {|v| @options[:version] = v }
   opt.parse!(ARGV)
+end
+
+if @options[:version]
+  puts "Ladder Converter #{LadderConverter::VERSION}"
+  exit 0
 end
 
 unless ARGV.size == 2
@@ -26,14 +34,16 @@ unless File.exist? src_path
   exit -1
 end
 
-while File.exist? dst_path
-  print "Target file #{File.basename(dst_path)} is exist. Overwrite existing file (y/N) ? "
-  case STDIN.gets.chomp
-  when /^y$/i, /^yes$/i
-    break
-  when /^n$/i, /^no$/i
-    STDERR.puts "Abort converting!"
-    exit -1
+unless @options[:force_converting]
+  while File.exist? dst_path
+    print "Target file #{File.basename(dst_path)} is exist. Overwrite existing file (y/N) ? "
+    case STDIN.gets.chomp
+    when /^y$/i, /^yes$/i
+      break
+    when /^n$/i, /^no$/i
+      STDERR.puts "Abort converting!"
+      exit -1
+    end
   end
 end
 

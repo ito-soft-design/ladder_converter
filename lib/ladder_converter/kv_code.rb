@@ -44,7 +44,7 @@ module LadderConverter
         when /^D((ADD|SUB|MUL|DIV|INC|DEC)P)$/
           "#{own_mnemonic($1)}.D"
 
-        when 'MPS', 'MRD', 'MPP'
+        when 'MPS', 'MRD', 'MPP', 'NOP'
           mnemonic
 
 
@@ -80,7 +80,9 @@ module LadderConverter
              'LD<=', 'AND<=', 'OR<=',
              'LD>=', 'AND>=', 'OR>=',
              'CJ', 
-             'CALL'
+             'CALL',
+             'FMOV', 'BMOV',
+             'FOR', 'NEXT'
           mnemonic
         else
           n = {
@@ -117,7 +119,7 @@ module LadderConverter
           when /^M8001$/i # 常時OFF
             "CR2003"
           when /^([A-Z]+.+)(Z\d+)/
-            "#{$1}:#{conv_dev $2}"
+            "#{own_device $1}:#{own_device $2}"
           when /^Z(\d+)$/
             "Z#{($1.to_i + 1).to_s.rjust(2, '0')}"
           when /^MR|^DM/i
@@ -132,7 +134,7 @@ module LadderConverter
           when /^D/i
             device.gsub(/^D+/i, "DM")
           when /^K\d+([A-Z]+.+)/i
-            return conv_dev $1
+            return own_device $1
           when /^K\d+$/i
             device.gsub(/^K+/i, "#")
           when /^H(.+)/
