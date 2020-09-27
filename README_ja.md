@@ -67,6 +67,13 @@ gem 'ladder_converter'
 
 https://github.com/ito-soft-design/ladder_converter/blob/master/test/files/src/FX2N.gxw
 
+## 配布
+
+Ruby環境を準備できない方のためにWindowsアプリケーションをGumroadで配布していますのでお試しください。  
+
+[LadderConverter.exe](https://gum.co/TDjGg)
+
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/ito-soft-design/ladder_converter.
